@@ -17,7 +17,7 @@ const EmployerRegister: React.FC = () => {
     );
     if (response.data) {
       setMessage(response.data.message);
-      router.push(`/employer/dashboard?employerId=${response.data.employer._id}`);
+      router.push(`/employeer/dashboard?employerId=${response.data.employer._id}`);
     } else {
       setMessage(response.error || 'Registration failed');
     }
