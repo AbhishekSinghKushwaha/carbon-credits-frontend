@@ -4,6 +4,7 @@ import { apiCall } from '../utils/api';
 interface Employer {
   _id: string;
   name: string;
+  userName: String;
   credits: number;
   bankApproved: boolean;
 }
@@ -24,7 +25,7 @@ const EmployerDashboard: React.FC<{ employerId: string }> = ({ employerId }) => 
   useEffect(() => {
     const fetchEmployer = async () => {
       const response = await apiCall<{ employer: Employer; employees: Employee[] }>(
-        `/api/employers/${employerId}`
+        `/api/employers/get/${employerId}`
       );
       if (response.data) {
         setEmployer(response.data.employer);
@@ -39,7 +40,7 @@ const EmployerDashboard: React.FC<{ employerId: string }> = ({ employerId }) => 
     const response = await apiCall<{ message: string }>(
       '/api/employers/trade',
       'POST',
-      { sellerId: employerId, buyerId: tradePartnerId, credits: tradeCredits }
+      { sellerUserName: employer?.userName, buyerUserName: tradePartnerId, credits: tradeCredits }
     );
     if (response.data) {
       alert(response.data.message);
@@ -72,7 +73,7 @@ const EmployerDashboard: React.FC<{ employerId: string }> = ({ employerId }) => 
             type="text"
             value={tradePartnerId}
             onChange={(e) => setTradePartnerId(e.target.value)}
-            placeholder="Buyer Employer ID"
+            placeholder="Buyer Employer UserID"
             className="border p-2 mr-2"
           />
           <input

@@ -1,22 +1,44 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../../../components/navbar';
 import { apiCall } from '../../../utils/api';
 import { useRouter } from 'next/navigation';
 
+interface Employer {
+  userName: string;
+  name: string;
+}
+
 const EmployeeRegister: React.FC = () => {
   const [name, setName] = useState('');
-  const [employerId, setEmployerId] = useState('');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [employerUserName, setEmployerUserName] = useState('');
   const [homeLocation, setHomeLocation] = useState('');
   const [workLocation, setWorkLocation] = useState('');
   const [message, setMessage] = useState('');
+  const [employers, setEmployers] = useState<Employer[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchEmployers = async () => {
+      const response = await apiCall<Employer[]>('/api/employers');
+      if (response.data) {
+        setEmployers(response.data);
+        if (response.data.length > 0) {
+          setEmployerUserName(response.data[0].userName); // Default to first employer
+        }
+      }
+    };
+    fetchEmployers();
+  }, []);
 
   const handleRegister = async () => {
     const response = await apiCall<{ message: string; employee: { _id: string } }>(
       '/api/employees/register',
       'POST',
-      { name, employerId, homeLocation, workLocation }
+      { name, userName, email, password, employerUserName, homeLocation, workLocation }
     );
     if (response.data) {
       setMessage(response.data.message);
@@ -40,11 +62,36 @@ const EmployeeRegister: React.FC = () => {
         />
         <input
           type="text"
-          value={employerId}
-          onChange={(e) => setEmployerId(e.target.value)}
-          placeholder="Employer ID"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          placeholder="Username"
           className="border p-2 mb-2 w-full"
         />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          className="border p-2 mb-2 w-full"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          className="border p-2 mb-2 w-full"
+        />
+        <select
+          value={employerUserName}
+          onChange={(e) => setEmployerUserName(e.target.value)}
+          className="border p-2 mb-2 w-full"
+        >
+          {employers.map((employer) => (
+            <option key={employer.userName} value={employer.userName}>
+              {employer.name} ({employer.userName})
+            </option>
+          ))}
+        </select>
         <input
           type="text"
           value={homeLocation}

@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation';
 
 const EmployerRegister: React.FC = () => {
   const [name, setName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const router = useRouter();
 
@@ -13,7 +16,7 @@ const EmployerRegister: React.FC = () => {
     const response = await apiCall<{ message: string; employer: { _id: string } }>(
       '/api/employers/register',
       'POST',
-      { name }
+      { name, userName, email, password }
     );
     if (response.data) {
       setMessage(response.data.message);
@@ -33,6 +36,27 @@ const EmployerRegister: React.FC = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Employer Name"
+          className="border p-2 mb-2 w-full"
+        />
+         <input
+          type="text"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          placeholder="Username"
+          className="border p-2 mb-2 w-full"
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          className="border p-2 mb-2 w-full"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
           className="border p-2 mb-2 w-full"
         />
         <button onClick={handleRegister} className="bg-green-500 text-white p-2">
