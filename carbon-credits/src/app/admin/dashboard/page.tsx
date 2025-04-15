@@ -1,19 +1,19 @@
 "use client";
 import React, { useEffect } from 'react';
 import Navbar from '../../../components/navbar';
-import EmployeeDashboard from '../../../components/employeeDashboard';
+import AdminDashboard from '../../../components/adminDashboard';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '../../../utils/authContext';
 
-const EmployeeDashboardPage: React.FC = () => {
+const AdminDashboardPage: React.FC = () => {
   const router = useRouter();
   const { user, loading } = useAuth();
   const searchParams = useSearchParams();
-  const employeeId = searchParams.get('employeeId');
+  const adminUserName = searchParams.get('adminUserName');
 
   useEffect(() => {
-    if (!loading && (!user || user.role !== 'employee')) {
-      router.push('/login');
+    if (!loading && (!user || user.role !== 'admin')) {
+      router.push('/admin/login');
     }
   }, [user, loading, router]);
 
@@ -21,20 +21,20 @@ const EmployeeDashboardPage: React.FC = () => {
     return <p className="text-center p-4">Loading authentication...</p>;
   }
 
-  if (!user || user.role !== 'employee') {
+  if (!user || user.role !== 'admin') {
     return <p className="text-center p-4">Redirecting to login...</p>;
   }
 
   return (
     <div>
       <Navbar />
-      {employeeId ? (
-        <EmployeeDashboard employeeId={employeeId} />
+      {adminUserName ? (
+        <AdminDashboard adminUserName={adminUserName} />
       ) : (
-        <p className="text-center p-4">Please provide an employeeId in the URL</p>
+        <p className="text-center p-4">Please provide an adminUserName in the URL</p>
       )}
     </div>
   );
 };
 
-export default EmployeeDashboardPage;
+export default AdminDashboardPage;

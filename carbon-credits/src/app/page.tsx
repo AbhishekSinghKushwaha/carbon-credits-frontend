@@ -12,8 +12,11 @@ const Home: React.FC = () => {
         <Link href="/employee/register" className="bg-blue-500 text-white p-2 mr-2">
           Register as Employee
         </Link>
-        <Link href="/employeer/register" className="bg-green-500 text-white p-2">
+        <Link href="/employeer/register" className="bg-green-500 text-white p-2 mr-2">
           Register as Employer
+        </Link>
+        <Link href="/admin/login" className="bg-purple-500 text-white p-2">
+          Admin Login
         </Link>
       </div>
     </div>
