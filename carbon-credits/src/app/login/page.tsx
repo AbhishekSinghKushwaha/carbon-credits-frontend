@@ -77,7 +77,7 @@ const Login: React.FC = () => {
           placeholder="Password"
           className="border p-2 mb-2 w-full"
         />
-        <button onClick={handleLogin} className="bg-blue-500 text-white p-2">
+        <button type='submit' onClick={handleLogin} className="bg-blue-500 text-white p-2">
           Login
         </button>
         {message && <p className="mt-2 text-green-600">{message}</p>}
