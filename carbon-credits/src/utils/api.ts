@@ -17,7 +17,7 @@ interface ApiResponse<T> {
         headers['Authorization'] = `Bearer ${token}`;
       }
   
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
+      const res = await fetch(`https://carbon-credits-backend.vercel.app${endpoint}`, {
         method,
         headers,
         body: body ? JSON.stringify(body) : undefined,
