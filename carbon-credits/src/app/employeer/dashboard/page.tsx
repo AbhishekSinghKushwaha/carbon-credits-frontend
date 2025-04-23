@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import Navbar from '../../../components/navbar';
 import EmployerDashboard from '../../../components/employerDashboard';
 import { useSearchParams } from 'next/navigation'
@@ -38,4 +38,10 @@ const EmployerDashboardPage: React.FC = () => {
   );
 };
 
-export default EmployerDashboardPage;
+export default function EmployerDashboardContent() {
+  return (
+      <Suspense fallback={<div>Loading admin dashboard...</div>}>
+        <EmployerDashboardPage />
+      </Suspense>
+    );
+};

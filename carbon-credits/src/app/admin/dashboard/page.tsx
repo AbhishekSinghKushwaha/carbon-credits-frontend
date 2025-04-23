@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import Navbar from '../../../components/navbar';
 import AdminDashboard from '../../../components/adminDashboard';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -37,4 +37,10 @@ const AdminDashboardPage: React.FC = () => {
   );
 };
 
-export default AdminDashboardPage;
+export default function AdminDashboardContent() {
+  return (
+    <Suspense fallback={<div>Loading admin dashboard...</div>}>
+      <AdminDashboardPage />
+    </Suspense>
+  );
+};
