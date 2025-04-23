@@ -60,9 +60,9 @@ const Navbar: React.FC = () => {
               <Link href="/login" className="text-white mr-4">
                 Login
               </Link>
-              <Link href="/login?role=admin" className="text-white mr-4">
+              {/* <Link href="/login?role=admin" className="text-white mr-4">
                 Admin Login
-              </Link>
+              </Link> */}
             </>
           )}
         </div>
