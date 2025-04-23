@@ -46,9 +46,9 @@ const Navbar: React.FC = () => {
                   <Link href={`/employee/dashboard?employeeId=${user.id}`} className="text-white mr-4">
                     Dashboard
                   </Link>
-                  <Link href="/employee/calculate-distance" className="text-white mr-4">
+                  {/* <Link href="/employee/calculate-distance" className="text-white mr-4">
                     Calculate Distance
-                  </Link>
+                  </Link> */}
                 </>
               )}
               <Link href="/logout" className="text-white" onClick={logout}>

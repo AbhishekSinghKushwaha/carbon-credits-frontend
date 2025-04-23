@@ -45,7 +45,7 @@ const AdminDashboard: React.FC<{ adminUserName: string }> = ({ adminUserName }) 
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Admin Dashboard</h2>
+      <h2 className="text-2xl font-bold mb-4">Carbon Credit Bank</h2>
       <p>Logged in as: {adminUserName}</p>
       <h3 className="text-xl mt-4">Employers</h3>
       {employers.length > 0 ? (
