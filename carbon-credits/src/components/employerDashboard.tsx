@@ -199,9 +199,34 @@ const EmployerDashboard: React.FC<{ employerId: string }> = ({ employerId }) => 
     );
     if (response.data) {
       alert(response.data.message);
-      window.location.reload();
+      fetchEmployer();
+      fetchAllEmployers();
+      setTradeCredits(0);
+      // window.location.reload();
     } else {
       alert(response.error);
+    }
+  };
+
+  const fetchEmployer = async () => {
+    const response = await apiCall<{ employer: Employer; employees: Employee[] }>(
+      `/api/employers/get/${employerId}`
+    );
+    if (response.data) {
+      setEmployer(response.data.employer);
+      setEmployees(response.data.employees);
+    }
+    setLoading(false);
+  };
+
+  const fetchAllEmployers = async () => {
+    const response = await apiCall<Employer[]>('/api/employers');
+    if (response.data) {
+      const filteredEmployers = response.data.filter((emp) => emp._id !== employerId);
+      setAllEmployers(filteredEmployers);
+      if (filteredEmployers.length > 0) {
+        setTradePartnerId(filteredEmployers[0].userName);
+      }
     }
   };
 
@@ -219,7 +244,8 @@ const EmployerDashboard: React.FC<{ employerId: string }> = ({ employerId }) => 
     );
     if (response.data) {
       alert(response.data.message);
-      window.location.reload();
+      fetchEmployer();
+      setBuyCredits(0);
     } else {
       alert(response.error);
     }
